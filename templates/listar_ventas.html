@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ventas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4c6daf;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Ventas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Medicamento</th>
+                <th>Cliente</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Precio Final</th>
+                <th>Entrega</th>
+                <th>Direccion</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.medicamento }}</td>
+                    <td>{{ venta.cliente.nombre }}</td>
+                    <td>{{ venta.cantidad }}</td>
+                    <td>{{ venta.precio_unitario }}</td>
+                    <td>{{ venta.precio_final }}</td>
+                    <td>{{ venta.entrega}}</td>
+                    <td>{{ venta.entrega.direccion}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<a href="/admin/Farmacia/venta/add/">
+    <button>Nueva venta?</button>
+</a>
+
+</html>
