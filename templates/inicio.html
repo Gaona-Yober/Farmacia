@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <style>
+        body {
+            background-image: url("https://scontent.floh1-1.fna.fbcdn.net/v/t1.6435-9/132299996_1226645037730380_7540160395480709101_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=XqOlU-vaj5cQ7kNvgGTvnmw&_nc_zt=23&_nc_ht=scontent.floh1-1.fna&_nc_gid=AzWjZsg_U88SE1hwtci5jzV&oh=00_AYAJGiKV_l1dA3nuPNaUuLhxs0BcM8c3-aGiO0UPMzim9A&oe=67BE7DCD");  /* URL externa */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        button {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: rgba(0, 0, 0, 1);
+            transform: scale(1);
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Yober's Farmacy</h1>
+    <div class="button-container">
+        <button onclick="location.href='/admin/Farmacia/'">Vista General</button>
+        <button onclick="location.href='/admin/Farmacia/venta'">Detalle de Ventas</button>
+        <button onclick="location.href='/admin/Farmacia/medicamento'">Inventario</button>
+        <button onclick="location.href='/admin/Farmacia/cliente'">Lista de Clientes</button>
+    </div>
+</body>
+</html>
