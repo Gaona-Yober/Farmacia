@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Inicio</title>
+    <title>Yober's Farmacy</title>
     <style>
+        /* Estilos generales */
         body {
-            background-image: url("https://www.pyp-asociados.com/wp-content/uploads/2018/07/gestionar-facebook-farmacia-1024x482.jpg");  /* URL externa */
+            background-image: url("https://centrocompetencia.com/wp-content/uploads/2021/05/iStock-1294438522-1024x683.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -19,52 +20,227 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Overlay oscuro */
+            z-index: 1;
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 2s ease-in-out;
+            color: #ffffff;
+            z-index: 2;
         }
 
-        button {
-            display: inline-block;
-            margin: 15px 0;
+        /* Contenedor de Tipo de Usuario */
+        .user-types {
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* Botón principal */
+        .user-types button {
             padding: 15px 30px;
-            font-size: 18px;
+            font-size: 1.2em;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: #537BC6; /* Azul */
             color: white;
             border: none;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.2s;
+            border-radius: 25px; /* Bordes más redondeados */
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 2;
         }
 
-        button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .user-types button:hover {
+            background-color: #5E82C9; /* Azul más claro */
             transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
         }
 
-        button:active {
-            background-color: rgba(0, 0, 0, 1);
+        .user-types button:active {
             transform: scale(1);
         }
 
-        .button-container {
+        /* Lista de opciones desplegable */
+        .user-types ul {
+            list-style-type: none;
+            margin: 10px 0 0;
+            padding: 0;
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease-in-out;
+            z-index: 2;
+        }
+
+        .user-types ul li {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 25px; /* Bordes más redondeados */
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .user-types ul li:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo más claro al pasar el mouse */
+            transform: translateY(-3px); /* Efecto de elevación */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+        }
+
+        /* Quiénes somos (parte inferior izquierda) */
+        .about-us {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(83, 123, 198, 0.9); /* Azul semitransparente */
+            padding: 15px;
+            border-radius: 15px; /* Bordes más redondeados */
+            text-align: left;
+            max-width: 250px;
+            animation: slideIn 1s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+        }
+
+        .about-us h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em;
+            color: #ffffff; /* Blanco */
+        }
+
+        .about-us ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .about-us ul li {
+            margin: 8px 0;
+            font-size: 1em;
+            color: #f8f9fa; /* Blanco */
+            padding: 8px 12px;
+            border-radius: 8px; /* Bordes redondeados */
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+            transition: background-color 0.3s ease;
+        }
+
+        .about-us ul li:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo más claro al pasar el mouse */
+        }
+
+        /* Imagen y texto en la parte superior derecha */
+        .address {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            background-color: rgba(83, 123, 198, 0.9); /* Azul semitransparente */
+            padding: 10px 20px;
+            border-radius: 25px; /* Bordes más redondeados */
+            animation: fadeIn 2s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+        }
+
+        .address img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .address span {
+            font-size: 1em;
+            color: white;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Yober's Farmacy</h1>
-    <div class="button-container">
-        <button onclick="location.href='/admin/Farmacia/'">Vista General</button>
-        <button onclick="location.href='/venta'">Detalle de Ventas</button>
-        <button onclick="location.href='/cliente'">Lista de Clientes</button>
-        <button onclick="location.href='/empleadosucursal/'">Empleados de Sucursales</button>
+    <!-- Dirección en la parte superior derecha -->
+    <div class="address">
+        <img src="https://cdn-icons-png.flaticon.com/128/346/346059.png" alt="Icono de ubicación">
+        <span>Av. Reinaldo Espinoza</span>
     </div>
-</body>
 
+    <h1>Yober's Farmacy</h1>
+
+    <!-- Botón para desplegar tipos de usuario -->
+    <div class="user-types">
+        <button onclick="toggleUserTypes()">Tipo de Usuario</button>
+        <ul id="userTypesList">
+            <li onclick="redirectToHome()">Cliente</li>
+            <li onclick="redirectRegistro()">Administrador</li>
+            <li onclick="redirectEmpleado()">Empleado de sucursal</li>
+        </ul>
+    </div>
+
+    <!-- Quiénes somos en la parte inferior izquierda -->
+    <div class="about-us">
+        <h2>Quiénes somos</h2>
+        <ul>
+            <li>Nosotros</li>
+            <li>Trabaja con nosotros</li>
+            <li>Términos y condiciones</li>
+        </ul>
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar los tipos de usuario
+        function toggleUserTypes() {
+            const userTypesList = document.getElementById('userTypesList');
+            if (userTypesList.style.display === 'none' || userTypesList.style.display === '') {
+                userTypesList.style.display = 'block';
+            } else {
+                userTypesList.style.display = 'none';
+            }
+        }
+
+        // Función para redirigir a /home al seleccionar "Cliente"
+        function redirectToHome() {
+            window.location.href = "/iniciocliente"; // Redirige a /home
+        }
+        function redirectRegistro() {
+            window.location.href = "/registroadministrador";
+        }
+        function redirectEmpleado() {
+            window.location.href = "/registroempleados";
+        }
+    </script>
+</body>
 </html>

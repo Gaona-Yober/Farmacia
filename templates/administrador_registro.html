@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validacion de administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            box-sizing: border-box; /* Asegura que el padding no aumente el tamaño del contenedor */
+        }
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Asegura que el padding no aumente el tamaño del input */
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5E82C9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box; /* Asegura que el padding no aumente el tamaño del botón */
+        }
+        .container button:hover {
+            background-color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro Admin</h2>
+        <form id="loginForm">
+            <label>
+                <input type="text" id="username" placeholder="Nombre de usuario" required>
+            </label>
+            <label>
+                <input type="password" id="password" placeholder="Contraseña" required>
+            </label>
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+
+            // Obtiene los valores de los campos de entrada
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Valida las credenciales
+            if (username === 'yobergaona21' && password === '2005yober') {
+                // Redirige a la página /admin si las credenciales son correctas
+                window.location.href = '/admin';
+            } else {
+                // Muestra un mensaje de error si las credenciales son incorrectas
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+    </script>
+</body>
+</html>

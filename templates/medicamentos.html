@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Medicamentos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4c6daf;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Medicamentos</h1>
+
+    <!-- Filtro por sucursal -->
+    <form method="GET" action="{% url 'listar_medicamentos' %}">
+        <label for="sucursal">Filtrar por Sucursal:</label>
+        <select name="sucursal" id="sucursal" onchange="this.form.submit()">
+            <option value="">Todas las Sucursales</option>
+            {% for sucursal in sucursales %}
+                <option value="{{ sucursal.id }}" {% if sucursal_id == sucursal.id %}selected{% endif %}>
+                    {{ sucursal.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Tabla de medicamentos -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Sucursal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicamento in medicamentos %}
+                <tr>
+                    <td>{{ medicamento.nombre }}</td>
+                    <td>{{ medicamento.descripcion|default:" " }}</td>
+                    <td>${{ medicamento.precio }}</td>
+                    <td>{{ medicamento.stock }}</td>
+                    <td>{{ medicamento.sucursal.nombre }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No hay medicamentos disponibles.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

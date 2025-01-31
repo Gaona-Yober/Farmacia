@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Sucursal(models.Model):
@@ -35,22 +35,24 @@ class Cliente(models.Model):
 class Transferencia(models.Model):
     medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
     sucursal_origen = models.ForeignKey(
-        Sucursal, related_name="transferencia_origen", on_delete=models.CASCADE
+        Sucursal,
+        related_name="transferencias_origen",
+        on_delete=models.CASCADE
     )
     sucursal_destino = models.ForeignKey(
-        Sucursal, related_name="transferencia_destino", on_delete=models.CASCADE
+        Sucursal,
+        related_name="transferencias_destino",
+        on_delete=models.CASCADE
     )
     cantidad = models.IntegerField()
     fecha_transferencia = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
-
         if self.medicamento.sucursal != self.sucursal_origen:
             raise ValidationError(
                 f"El medicamento '{self.medicamento.nombre}' no pertenece a la sucursal de origen '{self.sucursal_origen.nombre}'."
             )
 
-        # Verificar que hay suficiente stock en la sucursal de origen
         if self.medicamento.stock < self.cantidad:
             raise ValidationError(
                 f"No hay suficiente stock de '{self.medicamento.nombre}' en la sucursal de origen. "
@@ -58,13 +60,11 @@ class Transferencia(models.Model):
             )
 
     def save(self, *args, **kwargs):
-
-        self.clean()  # Validar antes de guardar
+        self.clean()
 
         self.medicamento.stock -= self.cantidad
         self.medicamento.save()
 
-        # Aumenta el stock en la sucursal destino
         medicamento_destino, created = Medicamento.objects.get_or_create(
             nombre=self.medicamento.nombre,
             sucursal=self.sucursal_destino,
@@ -76,11 +76,11 @@ class Transferencia(models.Model):
         )
         medicamento_destino.stock += self.cantidad
         medicamento_destino.save()
-
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Transferencia de {self.cantidad} {self.medicamento.nombre} de {self.sucursal_origen} a {self.sucursal_destino}"
+
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)
@@ -101,8 +101,6 @@ class Venta(models.Model):
             )
 
     def save(self, *args, **kwargs):
-        #Calcula automáticamente el precio unitario y el precio final antes de guardar.
-        #Actualiza el stock del medicamento
 
         self.precio_unitario = self.medicamento.precio
         self.precio_final = self.precio_unitario * self.cantidad
@@ -117,16 +115,15 @@ class Usuario(AbstractUser):
     telefono = models.CharField(max_length=15, null=True, blank=True)
     direccion = models.TextField(null=True, blank=True)
 
-    # Añadir un related_name para evitar conflicto con el modelo User de Django
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='farmacia_users',  # Cambiar el nombre del reverse accessor
+        related_name='farmacia_users',
         blank=True,
     )
 
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='farmacia_users_permissions',  # Cambiar el nombre del reverse accessor
+        related_name='farmacia_users_permissions',
         blank=True,
     )
 
@@ -139,3 +136,4 @@ class EmpleadoSucursal(models.Model):
 
     def __str__(self):
         return f"{self.usuario.username} - {self.sucursal.nombre}"
+

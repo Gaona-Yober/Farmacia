@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Sucursal, Medicamento, Cliente, Transferencia, Venta
-from .models import Usuario, EmpleadoSucursal
+from .models import Sucursal, Medicamento, Cliente, Transferencia, Venta, Usuario, EmpleadoSucursal
 from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
@@ -27,6 +26,5 @@ admin.site.register(Medicamento, MedicamentoAdmin)
 admin.site.register(Cliente)
 admin.site.register(Transferencia, TransferenciaAdmin)
 admin.site.register(Venta, VentaAdmin)
-
 admin.site.register(Usuario, CustomUserAdmin)
 admin.site.register(EmpleadoSucursal)
