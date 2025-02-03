@@ -21,19 +21,16 @@
             position: relative;
             flex-direction: column;
         }
-
         h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
             color: #537BC6; /* Azul principal */
             transition: transform 1.5s ease-in-out, top 1.5s ease-in-out, left 1.5s ease-in-out; /* Transición más suave */
         }
-
         p {
             font-size: 1.2em;
             color: #555;
         }
-
         /* Icono y texto en la parte superior derecha */
         .address {
             position: absolute;
@@ -47,24 +44,20 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .address:hover {
             transform: translateY(-3px); /* Efecto de elevación */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .address img {
             width: 24px;
             height: 24px;
             margin-right: 10px;
         }
-
         .address span {
             font-size: 1em;
             color: white;
             font-weight: bold;
         }
-
         /* Nuevo cuadro para "¿Qué estás buscando?" */
         .search-box {
             position: absolute;
@@ -78,24 +71,20 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .search-box:hover {
             transform: translateY(-3px); /* Efecto de elevación */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .search-box img {
             width: 20px;
             height: 24px;
             margin-right: 10px;
         }
-
         .search-box span {
             font-size: 1em;
             color: white;
             font-weight: bold;
         }
-
         .btn {
             margin-top: 20px;
             padding: 12px 24px;
@@ -108,17 +97,14 @@
             transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-
         .btn:hover {
             background-color: #5E82C9;
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
         .btn:active {
             transform: scale(1);
         }
-
         .move-top-left {
             position: absolute;
             top: 40px; /* Ajustado para que no quede tan pegado arriba */
@@ -126,12 +112,10 @@
             text-align: left;
             transform: translate(-30px, -30px); /* Movimiento más suave */
         }
-
         .fade-out {
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
-
         /* Icono y texto en la parte inferior izquierda */
         .bottom-left-image {
             position: absolute;
@@ -141,15 +125,13 @@
             height: auto;
             transition: transform 0.3s ease;
         }
-
         .bottom-left-image:hover {
             transform: translateY(-5px); /* Efecto de elevación */
         }
-
         /* Contenedor de texto sobre la imagen */
         .bottom-left-text {
             position: absolute;
-            bottom: 140px;
+            bottom: 110px;
             left: 30px;
             font-size: 1.2em;
             font-weight: bold;
@@ -157,14 +139,12 @@
             background-color: transparent; /* Fondo transparente */
             transition: color 0.3s ease;
         }
-
         .bottom-left-text:hover {
             color: #537BC6; /* Cambio de color al pasar el mouse */
         }
-
         .bottom-left-text-acercadenosotros {
             position: absolute;
-            bottom: 140px; /* eje y*/
+            bottom: 110px; /* eje y*/
             left: 180px;
             font-size: 1.2em;
             font-weight: bold;
@@ -172,11 +152,9 @@
             background-color: transparent; /* Fondo transparente */
             transition: color 0.3s ease;
         }
-
         .bottom-left-text-acercadenosotros:hover {
             color: #537BC6; /* Cambio de color al pasar el mouse */
         }
-
         /* Contenedores para la imagen y texto que aparecerán después */
         .image-with-text {
             display: none; /* Ocultamos inicialmente */
@@ -185,32 +163,60 @@
             gap: 30px;
             align-items: center; /* Esto asegura que las imágenes y los textos estén alineados verticalmente */
         }
-
-        .image-with-text img {
-            width: 150px;
-            height: auto;
+        .image-container {
+            width: 180px; /* Ancho fijo para el cuadro */
+            height: 180px; /* Alto fijo para el cuadro */
+            background-color: white; /* Fondo blanco */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 15px; /* Bordes redondeados */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .image-with-text img:hover {
+        .image-container:hover {
             transform: translateY(-5px); /* Efecto de elevación */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
-
+        .image-container img {
+            max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+            max-height: 100%; /* Asegura que la imagen no exceda el alto del contenedor */
+            border-radius: 10px; /* Bordes redondeados para la imagen */
+        }
         .image-with-text p {
             font-size: 1.1em;
             color: #537BC6; /* Azul principal */
             margin-top: 10px;
             font-weight: bold;
         }
-
         .image-text-item {
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        .add-to-cart {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            background-color: #537BC6; /* Verde */
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .add-to-cart:hover {
+            background-color: rgba(62, 95, 229, 0.89);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .price {
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 5px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -220,62 +226,64 @@
         <img src="{% static 'imagenes/marcador-de-posicion.png' %}" alt="Icono de ubicación">
         <span>Av. Reinaldo Espinoza</span>
     </div>
-
     <!-- Nuevo cuadro para "¿Qué estás buscando?" -->
     <div class="search-box">
         <img src="{% static 'imagenes/lupa3.png' %}" alt="Icono de lupa">
         <span>¿Qué estás buscando?</span>
     </div>
-
     <!-- Contenido principal -->
     <div id="content">
         <h1 id="welcomeText">Bienvenido a Yober's Farmacy</h1>
         <p id="subText">Tu farmacia de confianza, siempre cerca de ti.</p>
         <button class="btn" id="exploreBtn" onclick="moveText()">Explorar</button>
     </div>
-
     <!-- Imagen en la parte inferior izquierda -->
-    <img src="{% static 'imagenes/RedesSocialesS.png' %}" alt="Iconos RS" class="bottom-left-image">
-
+    <!-- <img src="{% static 'imagenes/RedesSocialesS.png' %}" alt="Iconos RS" class="bottom-left-image">-->
     <!-- Texto sobre la imagen -->
     <div class="bottom-left-text">
         Yober's.com
     </div>
-
     <div class="bottom-left-text-acercadenosotros">
         Acerca de nosotros
     </div>
-
     <!-- Contenedor para las dos imágenes y textos que aparecerán después -->
     <div class="image-with-text" id="imageTextContainer">
         <div class="image-text-item">
-            <img src="{% static 'imagenes/paracetamol.png' %}" alt="Imagen 2">
+            <div class="image-container">
+                <img src="{% static 'imagenes/paracetamol.png' %}" alt="Paracetamol 500mg">
+            </div>
             <p>Paracetamol 500mg</p>
+            <div class="price">$0.50</div>
+            <button class="add-to-cart">Agregar al carrito</button>
         </div>
         <div class="image-text-item">
-            <img src="{% static 'imagenes/amoxilina.png' %}" alt="Imagen 3">
+            <div class="image-container">
+                <img src="{% static 'imagenes/amoxilina.png' %}" alt="Amoxicilina 500mg">
+            </div>
             <p>Amoxicilina 500mg</p>
+            <div class="price">$0.75</div>
+            <button class="add-to-cart">Agregar al carrito</button>
         </div>
         <div class="image-text-item">
-            <img src="{% static 'imagenes/ibuprofeno.png' %}" alt="Imagen 4">
+            <div class="image-container">
+                <img src="{% static 'imagenes/ibuprofeno.png' %}" alt="Ibuprofeno 500mg">
+            </div>
             <p>Ibuprofeno 500mg</p>
+            <div class="price">$1.00</div>
+            <button class="add-to-cart">Agregar al carrito</button>
         </div>
     </div>
-
     <script>
         function moveText() {
             const content = document.getElementById('content');
             const exploreBtn = document.getElementById('exploreBtn');
             const imageTextContainer = document.getElementById('imageTextContainer');
-
             // Movemos el contenido y ocultamos el botón
             content.classList.add('move-top-left');
             exploreBtn.classList.add('fade-out');
-
             // Esperamos la transición antes de eliminar el botón
             setTimeout(() => {
                 exploreBtn.remove();
-
                 // Mostramos las imágenes y los textos después de 2 segundos
                 setTimeout(() => {
                     imageTextContainer.style.display = 'flex';
@@ -283,5 +291,8 @@
             }, 1000); // Espera 1.5 segundos antes de eliminar el botón
         }
     </script>
+<a href="https://wa.me/593993677375?text=Hola, me interesa saber más sobre sus productos." target="_blank">
+    <img src="{% static 'imagenes/whatappicono.png' %}" alt="Whatsapp Icon" class="bottom-left-image">
+</a>
 </body>
 </html>

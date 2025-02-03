@@ -2,24 +2,30 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+
 # Create your models here.
+
 class Sucursal(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.TextField()
     telefono = models.CharField(max_length=15)
+    #medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre
 
 class Medicamento(models.Model):
-    nombre = models.CharField(max_length=100, default="(L)")
+    nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
+    sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE, related_name="medicamentos")
 
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} - {self.sucursal.nombre}"
+
+
 
 
 class Cliente(models.Model):
@@ -35,14 +41,10 @@ class Cliente(models.Model):
 class Transferencia(models.Model):
     medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE)
     sucursal_origen = models.ForeignKey(
-        Sucursal,
-        related_name="transferencias_origen",
-        on_delete=models.CASCADE
+        Sucursal, related_name="transferencias_origen", on_delete=models.CASCADE
     )
     sucursal_destino = models.ForeignKey(
-        Sucursal,
-        related_name="transferencias_destino",
-        on_delete=models.CASCADE
+        Sucursal, related_name="transferencias_destino", on_delete=models.CASCADE
     )
     cantidad = models.IntegerField()
     fecha_transferencia = models.DateTimeField(auto_now_add=True)
@@ -52,7 +54,6 @@ class Transferencia(models.Model):
             raise ValidationError(
                 f"El medicamento '{self.medicamento.nombre}' no pertenece a la sucursal de origen '{self.sucursal_origen.nombre}'."
             )
-
         if self.medicamento.stock < self.cantidad:
             raise ValidationError(
                 f"No hay suficiente stock de '{self.medicamento.nombre}' en la sucursal de origen. "
@@ -61,26 +62,26 @@ class Transferencia(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-
         self.medicamento.stock -= self.cantidad
         self.medicamento.save()
 
         medicamento_destino, created = Medicamento.objects.get_or_create(
             nombre=self.medicamento.nombre,
-            sucursal=self.sucursal_destino,
+            sucursal=self.sucursal_destino,  # ✅ Relación correcta
             defaults={
                 'descripcion': self.medicamento.descripcion,
                 'precio': self.medicamento.precio,
                 'stock': 0,
             }
         )
+
         medicamento_destino.stock += self.cantidad
         medicamento_destino.save()
+
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Transferencia de {self.cantidad} {self.medicamento.nombre} de {self.sucursal_origen} a {self.sucursal_destino}"
-
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True, blank=True)

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmacia - Gestión</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Columna izquierda */
+        .sidebar {
+            width: 250px;
+            background-color: #4c6daf;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .option {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar .option h3 {
+            margin: 0;
+            color: #4c6daf;
+            font-size: 18px;
+        }
+
+        .sidebar .option p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            margin-left: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h1 {
+            color: #4c6daf;
+            margin-bottom: 20px;
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4c6daf;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Botones */
+        button {
+            padding: 8px 12px;
+            background-color: #4c6daf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3a5a8f;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 10px;
+            }
+            .main-content {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Columna izquierda -->
+    <div class="sidebar">
+        <h2>Menú</h2>
+        <div class="option" onclick="mostrarTabla('ventas')">
+            <h3>Lista de Ventas</h3>
+            <p>Gestiona las ventas realizadas.</p>
+        </div>
+        <div class="option" onclick="mostrarTabla('medicamentos')">
+            <h3>Lista de Medicamentos</h3>
+            <p>Consulta y gestiona los medicamentos.</p>
+        </div>
+        <div class="option" onclick="mostrarTabla('clientes')">
+            <h3>Lista de Clientes</h3>
+            <p>Administra la información de los clientes.</p>
+        </div>
+        <div class="option" onclick="mostrarTabla('transferencias')">
+            <h3>Lista de Transferencias</h3>
+            <p>Gestiona las transferencias de medicamentos.</p>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Lista de Ventas (oculta inicialmente) -->
+        <div id="ventas" class="tabla-contenido">
+            <h1>Lista de Ventas</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Cliente</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Final</th>
+                        <th>Entrega</th>
+                        <th>Dirección</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                        <tr>
+                            <td>{{ venta.medicamento }}</td>
+                            <td>{{ venta.cliente.nombre }}</td>
+                            <td>{{ venta.cantidad }}</td>
+                            <td>{{ venta.precio_unitario }}</td>
+                            <td>{{ venta.precio_final }}</td>
+                            <td>{{ venta.entrega }}</td>
+                            <td>{{ venta.entrega.direccion }}</td>
+                            <td class="actions">
+                                <button onclick="editarVenta({{ venta.id }})">Editar</button>
+                                <button onclick="eliminarVenta({{ venta.id }})">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/admin/Farmacia/venta/add/">
+                <button>Nueva Venta</button>
+            </a>
+        </div>
+
+        <!-- Lista de Medicamentos (oculta inicialmente) -->
+        <div id="medicamentos" class="tabla-contenido" style="display: none;">
+            <h1>Lista de Medicamentos</h1>
+            <form class="filter-form">
+                <label for="sucursal">Filtrar por Sucursal:</label>
+                <select name="sucursal" id="sucursal" onchange="filtrarMedicamentos()">
+                    <option value="">Todas las Sucursales</option>
+                    {% for sucursal in sucursales %}
+                        <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <table id="tabla-medicamentos">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Sucursal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for medicamento in medicamentos %}
+                        <tr data-sucursal="{{ medicamento.sucursal.id }}">
+                            <td>{{ medicamento.nombre }}</td>
+                            <td>{{ medicamento.descripcion|default:" " }}</td>
+                            <td>${{ medicamento.precio }}</td>
+                            <td>{{ medicamento.stock }}</td>
+                            <td>{{ medicamento.sucursal.nombre }}</td>
+                            <td class="actions">
+                                <button onclick="editarMedicamento({{ medicamento.id }})">Editar</button>
+                                <button onclick="eliminarMedicamento({{ medicamento.id }})">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6">No hay medicamentos disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/admin/Farmacia/medicamento/add/">
+                <button>Nuevo Medicamento</button>
+            </a>
+        </div>
+
+        <!-- Lista de Clientes (oculta inicialmente) -->
+        <div id="clientes" class="tabla-contenido" style="display: none;">
+            <h1>Lista de Clientes</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Cédula</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                        <tr>
+                            <td>{{ cliente.nombre }}</td>
+                            <td>{{ cliente.telefono }}</td>
+                            <td>{{ cliente.ci }}</td>
+                            <td class="actions">
+                                <button onclick="editarCliente({{ cliente.id }})">Editar</button>
+                                <button onclick="eliminarCliente({{ cliente.id }})">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/admin/Farmacia/cliente/add/">
+                <button>Añadir Cliente</button>
+            </a>
+        </div>
+
+        <!-- Lista de Transferencias (oculta inicialmente) -->
+        <div id="transferencias" class="tabla-contenido" style="display: none;">
+            <h1>Lista de Transferencias</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Sucursal Origen</th>
+                        <th>Sucursal Destino</th>
+                        <th>Cantidad</th>
+                        <th>Fecha de Transferencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transferencia in transferencias %}
+                        <tr>
+                            <td>{{ transferencia.medicamento.nombre }}</td>
+                            <td>{{ transferencia.sucursal_origen.nombre }}</td>
+                            <td>{{ transferencia.sucursal_destino.nombre }}</td>
+                            <td>{{ transferencia.cantidad }}</td>
+                            <td>{{ transferencia.fecha_transferencia }}</td>
+                            <td class="actions">
+                                <button onclick="editarTransferencia({{ transferencia.id }})">Editar</button>
+                                <button onclick="eliminarTransferencia({{ transferencia.id }})">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6">No hay transferencias disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/admin/Farmacia/transferencia/add/">
+                <button>Nueva Transferencia</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Función para mostrar la tabla seleccionada
+        function mostrarTabla(tabla) {
+            // Oculta todas las tablas
+            document.querySelectorAll('.tabla-contenido').forEach(t => {
+                t.style.display = 'none';
+            });
+            // Muestra la tabla seleccionada
+            document.getElementById(tabla).style.display = 'block';
+        }
+
+        // Función para filtrar medicamentos automáticamente
+        function filtrarMedicamentos() {
+            const sucursalId = document.getElementById("sucursal").value;
+            const filas = document.querySelectorAll("#tabla-medicamentos tbody tr");
+
+            filas.forEach(fila => {
+                const filaSucursalId = fila.getAttribute("data-sucursal");
+                if (sucursalId === "" || filaSucursalId === sucursalId) {
+                    fila.style.display = ""; // Muestra la fila
+                } else {
+                    fila.style.display = "none"; // Oculta la fila
+                }
+            });
+        }
+
+        // Funciones para editar y eliminar registros
+        function editarVenta(id) {
+            window.location.href = `/admin/Farmacia/venta/${id}/change/`;
+        }
+        function eliminarVenta(id) {
+            if (confirm('¿Estás seguro de eliminar esta venta?')) {
+                window.location.href = `/admin/Farmacia/venta/${id}/delete/`;
+            }
+        }
+        function editarMedicamento(id) {
+            window.location.href = `/admin/Farmacia/medicamento/${id}/change/`;
+        }
+        function eliminarMedicamento(id) {
+            if (confirm('¿Estás seguro de eliminar este medicamento?')) {
+                window.location.href = `/admin/Farmacia/medicamento/${id}/delete/`;
+            }
+        }
+        function editarCliente(id) {
+            window.location.href = `/admin/Farmacia/cliente/${id}/change/`;
+        }
+        function eliminarCliente(id) {
+            if (confirm('¿Estás seguro de eliminar este cliente?')) {
+                window.location.href = `/admin/Farmacia/cliente/${id}/delete/`;
+            }
+        }
+        function editarTransferencia(id) {
+            window.location.href = `/admin/Farmacia/transferencia/${id}/change/`;
+        }
+        function eliminarTransferencia(id) {
+            if (confirm('¿Estás seguro de eliminar esta transferencia?')) {
+                window.location.href = `/admin/Farmacia/transferencia/${id}/delete/`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Farmacia import views
+from Farmacia.views import vista_administrador
 
 urlpatterns = [
     path('', views.home, name='inicio'),
@@ -31,5 +32,5 @@ urlpatterns = [
     path('iniciocliente/', views.inicioClientes, name='cliente'),
     path('registroadministrador/', views.registroadministrador, name='registroadministrador'),
     path('registroempleados/', views.registroempleados, name='registroempleados'),
-
+    path('vistaadministrador/', vista_administrador, name='vista_administrador'),
 ]

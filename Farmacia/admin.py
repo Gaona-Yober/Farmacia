@@ -1,11 +1,10 @@
 from django.contrib import admin
 from .models import Sucursal, Medicamento, Cliente, Transferencia, Venta, Usuario, EmpleadoSucursal
 from django.contrib.auth.admin import UserAdmin
-
 # Register your models here.
 
 class MedicamentoAdmin(admin.ModelAdmin):
-    list_display = ('nombre','sucursal', 'stock')
+    list_display = ('nombre','sucursal','precio', 'stock')
     list_filter = ('sucursal',)
 
 class VentaAdmin(admin.ModelAdmin):
@@ -21,6 +20,9 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ("Información adicional", {"fields": ("telefono", "direccion")}),
     )
+
+
+
 admin.site.register(Sucursal)
 admin.site.register(Medicamento, MedicamentoAdmin)
 admin.site.register(Cliente)

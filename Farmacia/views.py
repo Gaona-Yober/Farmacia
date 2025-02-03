@@ -1,6 +1,6 @@
 # views.py de tu aplicación
 from django.shortcuts import render
-from .models import Cliente, Venta, EmpleadoSucursal, Medicamento, Sucursal
+from .models import Cliente, Venta, EmpleadoSucursal, Medicamento, Sucursal, Transferencia
 
 
 def home(request):
@@ -41,4 +41,18 @@ def registroadministrador(request):
 
 def registroempleados(request):
     return render(request, 'empleados_registro.html')
+
+def vista_administrador(request):
+    sucursales = Sucursal.objects.all()
+    clientes = Cliente.objects.all()
+    medicamentos = Medicamento.objects.all()
+    ventas = Venta.objects.all()
+    transferencias = Transferencia.objects.all()
+    return render(request, 'vista_administrador.html',{
+        'sucursales': sucursales,
+        'clientes': clientes,
+        'medicamentos': medicamentos,
+        'ventas': ventas,
+        'transferencias': transferencias,
+    })
 
